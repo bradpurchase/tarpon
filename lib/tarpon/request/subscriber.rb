@@ -9,7 +9,9 @@ module Tarpon
       end
 
       def get_or_create # rubocop:disable Naming/AccessorMethodName
-        perform(method: :get, path: path, key: :public)
+        headers = {}
+        headers['X-Is-Sandbox'] = Rails.env.development? if defined?(Rails)
+        perform(method: :get, headers: headers, path: path, key: :public)
       end
 
       def delete
